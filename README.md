@@ -1,6 +1,10 @@
 # AchieveIt
 
-AchieveIt is a tool to help you achieve your goals :)
+AchieveIt - курсовая работа :)
+
+## Цель
+
+Разработать приложение для достижения целей.
 
 ## Быстрое начало
 
