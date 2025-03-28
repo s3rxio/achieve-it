@@ -1,0 +1,16 @@
+{
+  "files.autoSave": "onFocusChange",
+  "editor.tabSize": 4,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always"
+    }
+  },
+  "[typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always"
+    }
+  }
+}

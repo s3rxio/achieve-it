@@ -1,0 +1,90 @@
+{
+  "name": "@achieve-it/host",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/host/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rspack:rspack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "apps/host/dist",
+        "index": "apps/host/src/index.html",
+        "baseHref": "/",
+        "main": "apps/host/src/main.ts",
+        "tsConfig": "apps/host/tsconfig.app.json",
+        "assets": ["apps/host/src/favicon.ico", "apps/host/src/assets"],
+        "rspackConfig": "apps/host/rspack.config.ts",
+        "styles": ["apps/host/src/styles.css"],
+        "scripts": [],
+        "configurations": {
+          "development": {
+            "mode": "development"
+          },
+          "production": {
+            "mode": "production",
+            "optimization": true,
+            "sourceMap": false,
+            "outputHashing": "all",
+            "namedChunks": false,
+            "extractLicenses": true,
+            "vendorChunk": false
+          }
+        },
+        "target": "web"
+      },
+      "configurations": {
+        "production": {
+          "rspackConfig": "apps/host/rspack.config.prod.ts"
+        }
+      },
+      "dependsOn": ["^build", "typecheck"]
+    },
+    "serve": {
+      "executor": "@nx/rspack:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "@achieve-it/host:build",
+        "hmr": true,
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "@achieve-it/host:build:development"
+        },
+        "production": {
+          "buildTarget": "@achieve-it/host:build:production",
+          "hmr": false
+        }
+      },
+      "dependsOn": ["typecheck"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "executor": "@nx/rspack:module-federation-static-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "serveTarget": "@achieve-it/host:serve"
+      },
+      "configurations": {
+        "development": {
+          "serveTarget": "@achieve-it/host:serve:development"
+        },
+        "production": {
+          "serveTarget": "@achieve-it/host:serve:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{projectRoot}/test-output/jest/coverage"],
+      "options": {
+        "jestConfig": "apps/host/jest.config.ts"
+      }
+    }
+  }
+}

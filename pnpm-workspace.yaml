@@ -1,2 +1,5 @@
-packages: 
+packages:
+  # Applications
+  - "apps/*"
+  # Packages - shared stuff, libs
   - "packages/*"

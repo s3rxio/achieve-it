@@ -1,0 +1,90 @@
+{
+  "name": "landing",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/landing/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/rspack:rspack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "apps/landing/dist",
+        "index": "apps/landing/src/index.html",
+        "baseHref": "/",
+        "main": "apps/landing/src/main.ts",
+        "tsConfig": "apps/landing/tsconfig.app.json",
+        "assets": ["apps/landing/src/favicon.ico", "apps/landing/src/assets"],
+        "rspackConfig": "apps/landing/rspack.config.ts",
+        "styles": ["apps/landing/src/styles.css"],
+        "scripts": [],
+        "configurations": {
+          "development": {
+            "mode": "development"
+          },
+          "production": {
+            "mode": "production",
+            "optimization": true,
+            "sourceMap": false,
+            "outputHashing": "all",
+            "namedChunks": false,
+            "extractLicenses": true,
+            "vendorChunk": false
+          }
+        },
+        "target": "web"
+      },
+      "configurations": {
+        "production": {
+          "rspackConfig": "apps/landing/rspack.config.prod.ts"
+        }
+      },
+      "dependsOn": ["^build", "typecheck"]
+    },
+    "serve": {
+      "executor": "@nx/rspack:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "landing:build",
+        "hmr": true,
+        "port": 4201
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "landing:build:development"
+        },
+        "production": {
+          "buildTarget": "landing:build:production",
+          "hmr": false
+        }
+      },
+      "dependsOn": ["typecheck"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "executor": "@nx/rspack:module-federation-static-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "serveTarget": "landing:serve"
+      },
+      "configurations": {
+        "development": {
+          "serveTarget": "landing:serve:development"
+        },
+        "production": {
+          "serveTarget": "landing:serve:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{projectRoot}/test-output/jest/coverage"],
+      "options": {
+        "jestConfig": "apps/landing/jest.config.ts"
+      }
+    }
+  }
+}
