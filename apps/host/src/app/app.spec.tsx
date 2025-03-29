@@ -19,8 +19,6 @@ describe("App", () => {
         <App />
       </BrowserRouter>
     );
-    expect(
-      getAllByText(new RegExp("Welcome @achieve-it/host", "gi")).length > 0
-    ).toBeTruthy();
+    expect(getAllByText(new RegExp("Host", "gi")).length > 0).toBeTruthy();
   });
 });

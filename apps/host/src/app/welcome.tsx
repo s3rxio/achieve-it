@@ -1,8 +1,6 @@
 import { FC } from "react";
 
-interface WelcomeProps {}
-
-export const Welcome: FC<WelcomeProps> = props => {
+export const Welcome: FC = props => {
   return (
     <div>
       <h1>Host</h1>
