@@ -98,8 +98,8 @@
         "label": "landing"
       },
       {
-        "value": "backend",
-        "label": "backend"
+        "value": "api",
+        "label": "api"
       },
       {
         "value": "packages",
