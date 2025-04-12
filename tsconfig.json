@@ -4,12 +4,6 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/host"
-    },
-    {
-      "path": "./apps/landing"
-    },
-    {
       "path": "./apps/api"
     }
   ]
