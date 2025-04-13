@@ -6,6 +6,8 @@ import { AppModule } from "./app/app.module";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.API_PORT || 3000;
+  const host = process.env.API_HOST || "localhost";
+  const url = process.env.API_URL || `http://${host}:${port}`;
 
   const config = new DocumentBuilder()
     .setTitle("Achieve It API")
@@ -16,14 +18,12 @@ async function bootstrap() {
   const swaggerPath = "docs";
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(swaggerPath, app, documentFactory, {
-    swaggerUrl: `${swaggerPath}/json` // FIXME: JSON don't work
+    jsonDocumentUrl: `${swaggerPath}/json`
   });
 
-  await app.listen(port);
-  Logger.log(`🚀 Application is running on: http://localhost:${port}`);
-  Logger.log(
-    `🚀 Swagger is running on: http://localhost:${port}/${swaggerPath}`
-  );
+  await app.listen(port, host);
+  Logger.log(`🚀 Application is running on: ${url}`);
+  Logger.log(`🚀 Swagger is running on: ${url}/${swaggerPath}`);
 }
 
 bootstrap();
