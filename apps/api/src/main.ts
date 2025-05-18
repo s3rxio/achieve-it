@@ -16,14 +16,16 @@ async function bootstrap() {
     .build();
 
   const swaggerPath = "docs";
+  const swaggerJsonPath = `${swaggerPath}/json`;
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(swaggerPath, app, documentFactory, {
-    jsonDocumentUrl: `${swaggerPath}/json`
+    jsonDocumentUrl: swaggerJsonPath
   });
 
   await app.listen(port, host);
   Logger.log(`🚀 Application is running on: ${url}`);
-  Logger.log(`🚀 Swagger is running on: ${url}/${swaggerPath}`);
+  Logger.log(`📚 Swagger is running on: ${url}/${swaggerPath}`);
+  Logger.log(`📃 OpenAPI specification path: ${url}/${swaggerJsonPath}`);
 }
 
 bootstrap();

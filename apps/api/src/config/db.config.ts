@@ -16,6 +16,7 @@ const dbConfig = registerAs(
     entities: [User],
     migrations: ["src/migrations/*.ts"],
     synchronize: true,
+    logging: "all",
     cache: {
       type: "redis",
       options: {

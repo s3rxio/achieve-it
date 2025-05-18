@@ -8,6 +8,7 @@ import { ConfigService } from "@nestjs/config";
 import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
+import { Not } from "typeorm";
 import { UserService } from "../user/user.service";
 import { IS_PUBLIC_KEY } from "./is-public.decorator";
 
@@ -41,7 +42,8 @@ export class AuthGuard implements CanActivate {
       });
 
       const user = await this.userService.findOne({
-        id: payload.sub
+        id: payload.sub,
+        refreshToken: Not("")
       });
 
       request.user = user;
