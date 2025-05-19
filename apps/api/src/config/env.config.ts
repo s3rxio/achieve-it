@@ -14,9 +14,11 @@ enum NodeEnv {
 }
 
 export class EnvironmentVariables {
+  /* RUNTIME */
   @IsEnum(NodeEnv)
   NODE_ENV!: NodeEnv;
 
+  /* API */
   @IsString()
   API_HOST!: string;
 
@@ -28,6 +30,7 @@ export class EnvironmentVariables {
   @IsString()
   API_URL!: string;
 
+  /* POSTGRES */
   @IsString()
   POSTGRES_HOST!: string;
 
@@ -45,9 +48,18 @@ export class EnvironmentVariables {
   @IsString()
   POSTGRES_DB!: string;
 
+  /* JWT */
   @IsString()
   JWT_SECRET!: string;
 
+  /* TOKEN */
+  @IsString()
+  TOKEN_ACCESS_LIFETIME!: string;
+
+  @IsString()
+  TOKEN_REFRESH_LIFETIME!: string;
+
+  /* REDIS */
   @IsString()
   REDIS_HOST!: string;
 

@@ -6,6 +6,7 @@ import {
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
+import { Token } from "../config/token.config";
 import { UserService } from "../user/user.service";
 import { LoginDto } from "./dtos/login.dto";
 import { RegisterDto } from "./dtos/register.dto";
@@ -13,11 +14,6 @@ import { RegisterDto } from "./dtos/register.dto";
 export type JwtPayload = {
   sub: number;
 };
-
-export enum TokenType {
-  Access = "access",
-  Refresh = "refresh"
-}
 
 @Injectable()
 export class AuthService {
@@ -78,7 +74,8 @@ export class AuthService {
     }
 
     return {
-      accessToken: await this.signToken(userId, TokenType.Access)
+      accessToken: await this.signToken(userId, Token.Access),
+      refreshToken: await this.createRefreshToken(userId)
     };
   }
 
@@ -93,20 +90,20 @@ export class AuthService {
   }
 
   async createRefreshToken(userId: number) {
-    const refreshToken = await this.signToken(userId, TokenType.Refresh);
+    const refreshToken = await this.signToken(userId, Token.Refresh);
     await this.userService.update(userId, {
       refreshToken: bcrypt.hashSync(refreshToken, 10)
     });
     return refreshToken;
   }
 
-  signToken(userId: number, type: TokenType) {
+  signToken(userId: number, type: Token) {
     const payload: JwtPayload = {
       sub: userId
     };
 
     return this.jwtService.signAsync(payload, {
-      expiresIn: type === TokenType.Access ? "1h" : "14d",
+      expiresIn: this.configService.get(`token.${type}.expiresIn`),
       secret: this.configService.get("jwt.secret")
     });
   }

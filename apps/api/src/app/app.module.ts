@@ -8,6 +8,7 @@ import { AuthModule } from "../auth/auth.module";
 import dbConfig from "../config/db.config";
 import { validateEnv } from "../config/env.config";
 import jwtConfig from "../config/jwt.config";
+import tokenConfig from "../config/token.config";
 import { UserModule } from "../user/user.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -15,7 +16,7 @@ import { AppService } from "./app.service";
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [dbConfig, jwtConfig],
+      load: [dbConfig, jwtConfig, tokenConfig],
       envFilePath: [
         ".env",
         ".env.local",
