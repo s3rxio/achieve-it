@@ -86,24 +86,12 @@
         "label": "repo"
       },
       {
-        "value": "frontend",
-        "label": "frontend"
-      },
-      {
-        "value": "host",
-        "label": "host"
-      },
-      {
-        "value": "landing",
-        "label": "landing"
+        "value": "web",
+        "label": "web"
       },
       {
         "value": "api",
         "label": "api"
-      },
-      {
-        "value": "packages",
-        "label": "packages"
       },
       {
         "value": "",
