@@ -1,9 +1,10 @@
 import { Exclude } from "class-transformer";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { TimestampEntity } from "../../common";
 import { TaskEntity } from "../../task/entities/task.entity";
 
 @Entity("users")
-export class UserEntity {
+export class UserEntity extends TimestampEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
