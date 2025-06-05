@@ -21,7 +21,7 @@ export class AuthService {
     private userService: UserService,
     private jwtService: JwtService,
     private configService: ConfigService
-  ) {}
+  ) { }
 
   async login(dto: LoginDto) {
     const user = await this.userService
@@ -79,6 +79,8 @@ export class AuthService {
     };
   }
 
+  /* TODO: Вынести в отдельный сервис */
+  /* ====== Начало блока ====== */
   async createTokens(userId: number) {
     const refreshToken = await this.createRefreshToken(userId);
     const { accessToken } = await this.refresh(userId, refreshToken);
@@ -97,7 +99,7 @@ export class AuthService {
     return refreshToken;
   }
 
-  signToken(userId: number, type: Token) {
+  async signToken(userId: number, type: Token) {
     const payload: JwtPayload = {
       sub: userId
     };
@@ -107,4 +109,7 @@ export class AuthService {
       secret: this.configService.get("jwt.secret")
     });
   }
+
+  /* ====== Конец блока ====== */
+
 }

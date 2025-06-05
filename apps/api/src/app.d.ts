@@ -5,9 +5,10 @@ declare global {
 
   namespace Express {
     interface Request {
-      user: import("./user/entities/user.entity").User;
+      user: import("./user/entities/user.entity").UserEntity;
     }
   }
 }
 
-export {};
+export { };
+

@@ -9,6 +9,7 @@ import dbConfig from "../config/db.config";
 import { validateEnv } from "../config/env.config";
 import jwtConfig from "../config/jwt.config";
 import tokenConfig from "../config/token.config";
+import { TaskModule } from "../task/task.module";
 import { UserModule } from "../user/user.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -38,7 +39,8 @@ import { AppService } from "./app.service";
       inject: [ConfigService]
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    TaskModule
   ],
   controllers: [AppController],
   providers: [
@@ -53,4 +55,4 @@ import { AppService } from "./app.service";
     }
   ]
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,5 +1,10 @@
 packages:
-  # Applications
-  - "apps/*"
-  # Packages - shared stuff, libs
-  - "packages/*"
+  - apps/*
+  - packages/*
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@parcel/watcher'
+  - '@scarf/scarf'
+  - '@swc/core'
+  - esbuild
+  - nx

@@ -1,6 +1,7 @@
 import { registerAs } from "@nestjs/config";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { User } from "../user/entities/user.entity";
+import { TaskEntity } from "../task/entities/task.entity";
+import { UserEntity } from "../user/entities/user.entity";
 
 const DB_CONFIG_KEY = "database";
 
@@ -13,7 +14,7 @@ const dbConfig = registerAs(
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
-    entities: [User],
+    entities: [UserEntity, TaskEntity],
     migrations: ["src/migrations/*.ts"],
     synchronize: true,
     logging: "all",

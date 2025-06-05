@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import { User } from "./entities/user.entity";
+import { UserEntity } from "./entities/user.entity";
 import { UserMe } from "./user-me.decorator";
 
 @ApiTags("users")
@@ -38,7 +38,7 @@ export class UserController {
   // }
 
   @Get("me")
-  me(@UserMe() user: User) {
+  me(@UserMe() user: UserEntity) {
     return user;
   }
 }

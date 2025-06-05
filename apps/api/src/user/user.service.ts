@@ -8,13 +8,13 @@ import * as bcrypt from "bcryptjs";
 import { FindOptionsWhere, Repository } from "typeorm";
 import { CreateUserDto } from "./dtos/create-user.dto";
 import { UpdateUserDto } from "./dtos/update-user.dto";
-import { User } from "./entities/user.entity";
+import { UserEntity } from "./entities/user.entity";
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly repo: Repository<User>
-  ) {}
+    @InjectRepository(UserEntity) private readonly repo: Repository<UserEntity>
+  ) { }
 
   async create(createUserDto: CreateUserDto) {
     await this.usernameIsTaken(createUserDto.username);
@@ -29,13 +29,13 @@ export class UserService {
     return this.repo.save(user);
   }
 
-  findAll(where: FindOptionsWhere<User> = {}) {
+  findAll(where: FindOptionsWhere<UserEntity> = {}) {
     return this.repo.find({
       where
     });
   }
 
-  async findOne(where: FindOptionsWhere<User> = {}) {
+  async findOne(where: FindOptionsWhere<UserEntity> = {}) {
     const user = await this.repo.findOne({
       where
     });
@@ -78,6 +78,7 @@ export class UserService {
     throw new NotImplementedException();
   }
 
+  /* TODO: Shouldn't be in UserService */
   hashPassword(password: string) {
     return bcrypt.hash(password, 10);
   }

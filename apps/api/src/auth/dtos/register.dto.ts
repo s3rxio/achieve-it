@@ -4,9 +4,9 @@ import { IsString } from "class-validator";
 export class RegisterDto {
   @IsString()
   @ApiProperty()
-  username!: string;
+  username: string;
 
   @IsString()
   @ApiProperty()
-  password!: string;
+  password: string;
 }

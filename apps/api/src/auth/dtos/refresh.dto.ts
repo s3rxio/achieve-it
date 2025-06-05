@@ -4,5 +4,5 @@ import { IsString } from "class-validator";
 export class RefreshDto {
   @IsString()
   @ApiProperty()
-  refreshToken!: string;
+  refreshToken: string;
 }
