@@ -5,7 +5,7 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcryptjs";
-import { FindOptionsWhere, Repository } from "typeorm";
+import { FindOptionsRelations, FindOptionsWhere, Repository } from "typeorm";
 import { CreateUserDto } from "./dtos/create-user.dto";
 import { UpdateUserDto } from "./dtos/update-user.dto";
 import { UserEntity } from "./entities/user.entity";
@@ -35,9 +35,11 @@ export class UserService {
     });
   }
 
-  async findOne(where: FindOptionsWhere<UserEntity> = {}) {
+  async findOne(where: FindOptionsWhere<UserEntity> = {}, relations: FindOptionsRelations<UserEntity> = {}) {
     const user = await this.repo.findOne({
-      where
+      where,
+      relations,
+      loadRelationIds: true
     });
 
     if (!user) {

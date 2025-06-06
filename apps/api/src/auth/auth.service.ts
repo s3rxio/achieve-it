@@ -21,7 +21,7 @@ export class AuthService {
     private userService: UserService,
     private jwtService: JwtService,
     private configService: ConfigService
-  ) { }
+  ) {}
 
   async login(dto: LoginDto) {
     const user = await this.userService
@@ -111,5 +111,4 @@ export class AuthService {
   }
 
   /* ====== Конец блока ====== */
-
 }

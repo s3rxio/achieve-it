@@ -7,7 +7,10 @@ import { TaskEntity } from "./entities/task.entity";
 
 @Injectable()
 export class TaskService {
-  constructor(@InjectRepository(TaskEntity) private readonly taskRepository: Repository<TaskEntity>) { }
+  constructor(
+    @InjectRepository(TaskEntity)
+    private readonly taskRepository: Repository<TaskEntity>
+  ) {}
 
   async create(createTaskDto: CreateTaskDto) {
     const { userId, ...restCreateTaskDto } = createTaskDto;
@@ -28,7 +31,7 @@ export class TaskService {
       relations: {
         user: true
       }
-    })
+    });
   }
 
   async findOne(where: FindOptionsWhere<TaskEntity> = {}) {

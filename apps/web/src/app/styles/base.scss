@@ -1,0 +1,12 @@
+@import url("./reset.css");
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+
+  overflow: hidden;
+
+  background-color: white;
+}

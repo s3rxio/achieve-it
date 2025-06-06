@@ -19,7 +19,7 @@ import { TaskService } from "./task.service";
 @ApiBearerAuth()
 @Controller("tasks")
 export class TaskController {
-  constructor(private readonly taskService: TaskService) { }
+  constructor(private readonly taskService: TaskService) {}
 
   @Post()
   create(@Body() createTaskDto: CreateTaskDto, @UserMe("id") userId: number) {
@@ -50,7 +50,10 @@ export class TaskController {
 
   @UseGuards(TaskGuard)
   @Patch(":id")
-  update(@Param("id", ParseIntPipe) id: number, @Body() updateTaskDto: UpdateTaskDto) {
+  update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() updateTaskDto: UpdateTaskDto
+  ) {
     return this.taskService.update(id, updateTaskDto);
   }
 }

@@ -24,6 +24,6 @@ export class UserEntity extends TimestampEntity {
   refreshToken?: string | null;
 
   /* Relations */
-  @OneToMany(() => TaskEntity, (task) => task.user)
+  @OneToMany(() => TaskEntity, task => task.user)
   tasks?: TaskEntity[];
 }

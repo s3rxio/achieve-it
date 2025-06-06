@@ -7,7 +7,7 @@
       "path": "./apps/api"
     },
     {
-      "path": "./web"
+      "path": "./apps/web"
     }
   ]
 }

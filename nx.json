@@ -111,7 +111,7 @@
       }
     },
     "test": {
-      "dependsOn": ["^build", "^build"]
+      "dependsOn": ["^build", "^build", "^build"]
     },
     "@nx/rspack:rspack": {
       "inputs": [

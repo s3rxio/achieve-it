@@ -4,9 +4,9 @@ import { TaskStatus } from "../task.types";
 import { CreateTaskDto } from "./create-task.dto";
 
 export class UpdateTaskDto extends PartialType(CreateTaskDto) {
-    @IsEnum(TaskStatus)
-    @ApiProperty({
-        enum: TaskStatus
-    })
-    status?: TaskStatus;
+  @IsEnum(TaskStatus)
+  @ApiProperty({
+    enum: TaskStatus
+  })
+  status?: TaskStatus;
 }

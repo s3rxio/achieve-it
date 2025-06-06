@@ -4,14 +4,12 @@ import { TaskService } from "./task.service";
 
 @Injectable()
 export class TaskGuard implements CanActivate {
-  constructor(private readonly taskService: TaskService) { }
+  constructor(private readonly taskService: TaskService) {}
 
   /* 
     Проверка принадлежности задачи текущему пользователю
   */
-  async canActivate(
-    context: ExecutionContext
-  ): Promise<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
 
     if (!request.user) {

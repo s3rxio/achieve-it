@@ -22,6 +22,8 @@ async function bootstrap() {
     jsonDocumentUrl: swaggerJsonPath
   });
 
+  app.enableCors("*");
+
   await app.listen(port, host);
   Logger.log(`🚀 Application is running on: ${url}`);
   Logger.log(`📚 Swagger is running on: ${url}/${swaggerPath}`);
