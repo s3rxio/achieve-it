@@ -10,7 +10,7 @@ export class TaskService {
   constructor(
     @InjectRepository(TaskEntity)
     private readonly taskRepository: Repository<TaskEntity>
-  ) {}
+  ) { }
 
   async create(createTaskDto: CreateTaskDto) {
     const { userId, ...restCreateTaskDto } = createTaskDto;
@@ -25,7 +25,7 @@ export class TaskService {
     return this.taskRepository.save(taskEntity);
   }
 
-  async findAll(where: FindOptionsWhere<TaskEntity> = {}) {
+  async findAll(where: FindOptionsWhere<TaskEntity> | FindOptionsWhere<TaskEntity>[] = {}) {
     return this.taskRepository.find({
       where,
       relations: {

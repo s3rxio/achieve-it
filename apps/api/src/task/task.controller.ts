@@ -6,9 +6,14 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  UseGuards
+  Query,
+  UseGuards,
+  UsePipes,
+  ValidationPipe
 } from "@nestjs/common";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiQuery, ApiTags } from "@nestjs/swagger";
+import dayjs from "dayjs";
+import { LessThanOrEqual } from "typeorm";
 import { UserMe } from "../user/user-me.decorator";
 import { CreateTaskDto } from "./dto/create-task.dto";
 import { UpdateTaskDto } from "./dto/update-task.dto";
@@ -19,7 +24,7 @@ import { TaskService } from "./task.service";
 @ApiBearerAuth()
 @Controller("tasks")
 export class TaskController {
-  constructor(private readonly taskService: TaskService) {}
+  constructor(private readonly taskService: TaskService) { }
 
   @Post()
   create(@Body() createTaskDto: CreateTaskDto, @UserMe("id") userId: number) {
@@ -30,12 +35,25 @@ export class TaskController {
   }
 
   @Get()
-  findAll(@UserMe("id") userId: number) {
-    return this.taskService.findAll({
-      user: {
-        id: userId
-      }
-    });
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @ApiQuery({ name: "date", required: false })
+  findAll(@Query("date") date: string, @UserMe("id") userId: number) {
+    const endDate = dayjs(date || Date.now()).endOf("month").toDate();
+
+    return this.taskService.findAll([
+      {
+        user: {
+          id: userId
+        },
+        dueDate: LessThanOrEqual(endDate)
+      },
+      {
+        user: {
+          id: userId
+        },
+        createdAt: LessThanOrEqual(endDate)
+      },
+    ]);
   }
 
   @Get(":id")
