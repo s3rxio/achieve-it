@@ -7,14 +7,13 @@ services:
       context: .
       dockerfile: ./apps/web/Dockerfile
       args:
-        - VITE_API_URL=/api
+        - VITE_API_URL=http://localhost:3000
     ports:
       - "4200:80"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.web.entrypoints=web"
-      - "traefik.http.routers.web.rule=PathPrefix(`/web`)"
-      - "traefik.http.routers.web.priority=2"
+      - "traefik.http.routers.web.rule=PathPrefix(`/`)"
 
   api:
     build: 
@@ -22,7 +21,6 @@ services:
       dockerfile: ./apps/api/Dockerfile
       args:
         - VITE_API_URL=/api
-    command: "--experimental-global-webcrypto"
     ports:
       - "3000:3000"
     env_file:
@@ -31,7 +29,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.api.entrypoints=web"
       - "traefik.http.routers.api.rule=PathPrefix(`/api`)"
-      - "traefik.http.routers.api.priority=1"
 
   traefik: 
     image: traefik:v2.10

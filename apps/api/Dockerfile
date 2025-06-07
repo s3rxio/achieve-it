@@ -4,14 +4,14 @@ WORKDIR /app
 
 COPY package.json ./
 
-RUN npm install pnpm -g
+RUN npm install nx pnpm crypto -g
 
 RUN pnpm install
 
 COPY . .
 
-RUN npx nx build api
+# RUN npx nx build api
 
 EXPOSE 3000
 
-CMD ["node", "apps/api/dist/main"]
+CMD ["npx", "nx", "serve", "api"]

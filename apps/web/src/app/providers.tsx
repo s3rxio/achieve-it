@@ -14,8 +14,7 @@ export const Providers: FC<ProvidersProps> = ({ children }) => {
       <ConfigProvider
         theme={{
           token: {
-            colorBgLayout: "white",
-            colorBgContainer: "white"
+            colorBgLayout: "white"
           }
         }}
       >
