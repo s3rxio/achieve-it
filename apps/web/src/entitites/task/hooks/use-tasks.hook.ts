@@ -9,5 +9,5 @@ export const useTasks = (
     queryKey: ["tasks", date],
     queryFn: () => taskApi.fetchTasks(date),
     initialData: [],
-    refetchInterval: 60 * 1000
+    refetchInterval: 1000
   });
