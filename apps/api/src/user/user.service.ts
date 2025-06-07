@@ -17,9 +17,11 @@ export class UserService {
 
     const hash = await this.hashPassword(createUserDto.password);
 
+    const shouldBeAdmin = await this.checkIsFirstUser();
     const user = this.repo.create({
       username: createUserDto.username,
-      password: hash
+      password: hash,
+      isAdmin: shouldBeAdmin
     });
 
     return this.repo.save(user);
@@ -75,10 +77,14 @@ export class UserService {
     return false;
   }
 
-  remove(id: number) {
-    const user = this.findOne({ id });
+  async remove(id: number) {
+    await this.findOne({ id });
 
     return this.repo.delete(id);
+  }
+
+  async checkIsFirstUser() {
+    return (await this.repo.count()) === 0;
   }
 
   /* TODO: Shouldn't be in UserService */

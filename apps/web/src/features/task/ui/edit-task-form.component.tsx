@@ -52,7 +52,7 @@ export const EditTaskForm: FC<EditTaskFormProps> = ({
         disabledDate={current => current && current < dayjs().startOf("day")}
       />
       <Button type="primary" htmlType="submit" loading={isLoading}>
-        Создать задачу
+        Изменить задачу
       </Button>
     </form>
   );
