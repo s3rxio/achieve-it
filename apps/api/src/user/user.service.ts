@@ -14,7 +14,7 @@ import { UserEntity } from "./entities/user.entity";
 export class UserService {
   constructor(
     @InjectRepository(UserEntity) private readonly repo: Repository<UserEntity>
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     await this.usernameIsTaken(createUserDto.username);
@@ -35,7 +35,10 @@ export class UserService {
     });
   }
 
-  async findOne(where: FindOptionsWhere<UserEntity> = {}, relations: FindOptionsRelations<UserEntity> = {}) {
+  async findOne(
+    where: FindOptionsWhere<UserEntity> = {},
+    relations: FindOptionsRelations<UserEntity> = {}
+  ) {
     const user = await this.repo.findOne({
       where,
       relations,

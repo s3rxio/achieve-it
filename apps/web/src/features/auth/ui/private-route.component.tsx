@@ -8,6 +8,5 @@ interface PrivateRouteProps {
 
 export const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
   const accessToken = useAuthStore(state => state.accessToken);
-  console.log(accessToken);
   return accessToken ? children : <Navigate to="/login" />;
 };

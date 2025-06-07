@@ -4,7 +4,8 @@ import { authApi } from "../api";
 import "../interceptors/auth.interceptor";
 
 export const useRegister = () => {
-    return useMutation({
-        mutationFn: (data: RegisterSchema) => authApi.register(data).then((res) => res.data),
-    });
+  return useMutation({
+    mutationFn: (data: RegisterSchema) =>
+      authApi.register(data).then(res => res.data)
+  });
 };

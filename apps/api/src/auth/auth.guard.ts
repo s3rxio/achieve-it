@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     private configService: ConfigService,
     private userService: UserService,
     private reflector: Reflector
-  ) { }
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
@@ -41,12 +41,15 @@ export class AuthGuard implements CanActivate {
         secret: this.configService.get("jwt.secret")
       });
 
-      const user = await this.userService.findOne({
-        id: payload.sub,
-        refreshToken: Not(""),
-      }, {
-        tasks: true
-      });
+      const user = await this.userService.findOne(
+        {
+          id: payload.sub,
+          refreshToken: Not("")
+        },
+        {
+          tasks: true
+        }
+      );
 
       request.user = user;
     } catch {

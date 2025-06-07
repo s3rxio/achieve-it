@@ -23,6 +23,12 @@ export class UserEntity extends TimestampEntity {
   @Exclude()
   refreshToken?: string | null;
 
+  /* TODO: Добавить роли */
+  @Column({
+    default: false
+  })
+  isAdmin: boolean;
+
   /* Relations */
   @OneToMany(() => TaskEntity, task => task.user)
   tasks?: TaskEntity[];

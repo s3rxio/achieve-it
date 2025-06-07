@@ -5,7 +5,7 @@ import Header from "./header.component";
 import Navbar from "./navbar.component";
 
 const LaoyutContent = styled(Layout.Content)({
-  padding: "1rem",
+  padding: "2rem",
   border: "1px solid #d9d9d9",
   borderBottom: "none",
   borderRight: "none",

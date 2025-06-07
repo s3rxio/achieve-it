@@ -24,7 +24,7 @@ import { TaskService } from "./task.service";
 @ApiBearerAuth()
 @Controller("tasks")
 export class TaskController {
-  constructor(private readonly taskService: TaskService) { }
+  constructor(private readonly taskService: TaskService) {}
 
   @Post()
   create(@Body() createTaskDto: CreateTaskDto, @UserMe("id") userId: number) {
@@ -38,7 +38,9 @@ export class TaskController {
   @UsePipes(new ValidationPipe({ transform: true }))
   @ApiQuery({ name: "date", required: false })
   findAll(@Query("date") date: string, @UserMe("id") userId: number) {
-    const endDate = dayjs(date || Date.now()).endOf("month").toDate();
+    const endDate = dayjs(date || Date.now())
+      .endOf("month")
+      .toDate();
 
     return this.taskService.findAll([
       {
@@ -52,7 +54,7 @@ export class TaskController {
           id: userId
         },
         createdAt: LessThanOrEqual(endDate)
-      },
+      }
     ]);
   }
 

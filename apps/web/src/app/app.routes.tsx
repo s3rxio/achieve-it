@@ -1,34 +1,36 @@
 import { FC, lazy, useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PrivateRoute, useAuthStore, useFetchMe } from "../features/auth";
+import TasksPage from "../pages/tasks";
 import { MainLayout } from "./ui/layout.component";
 
-const HomePage = lazy(() => import("../pages/home"));
 const NotFoundPage = lazy(() => import("../pages/not-found"));
 const LoginPage = lazy(() => import("../pages/login"));
 const RegisterPage = lazy(() => import("../pages/register"));
 
 export const Router: FC = () => {
+  const meQuery = useFetchMe(false);
   const authStore = useAuthStore();
   const isLoggedIn = !!authStore.accessToken && !!authStore.refreshToken;
 
-  const meQuery = useFetchMe(false);
-
   useEffect(() => {
-    if ((isLoggedIn && authStore.user) || meQuery.isFetching || !isLoggedIn) {
+    const authStore = useAuthStore.getState();
+    const isLoggedIn = !!authStore.accessToken && !!authStore.refreshToken;
+
+    if (!isLoggedIn || meQuery.isFetching || (isLoggedIn && authStore.user)) {
       return;
     }
 
-    if (meQuery.isError) {
-      useAuthStore.getState().clear();
+    if (meQuery.isError || meQuery.isStale) {
+      authStore.clear();
       return;
     }
 
     if (
+      isLoggedIn &&
       !authStore.user &&
       !meQuery.isLoading &&
-      !meQuery.isSuccess &&
-      !meQuery.isStale
+      !meQuery.isSuccess
     ) {
       meQuery.refetch({
         cancelRefetch: true
@@ -40,7 +42,7 @@ export const Router: FC = () => {
       authStore.setUser(meQuery.data);
       return;
     }
-  }, [isLoggedIn, authStore.user, meQuery, authStore]);
+  }, [meQuery]);
 
   return (
     <BrowserRouter>
@@ -48,7 +50,7 @@ export const Router: FC = () => {
         <Route path="/" element={<MainLayout />}>
           <Route
             index
-            element={isLoggedIn ? <Navigate to="/tasks" /> : <HomePage />}
+            element={<Navigate to={isLoggedIn ? "/tasks" : "/login"} />}
           />
 
           {/* Auth */}
@@ -59,7 +61,7 @@ export const Router: FC = () => {
             path="tasks"
             element={
               <PrivateRoute>
-                <HomePage />
+                <TasksPage />
               </PrivateRoute>
             }
           />
