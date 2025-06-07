@@ -17,10 +17,15 @@ export const CreateTaskForm: FC<CreateTaskFormProps> = ({
   onSubmit,
   isLoading
 }) => {
-  const { control, handleSubmit } = useAppForm(createTaskSchema);
+  const { control, handleSubmit, reset } = useAppForm(createTaskSchema);
+
+  const onSubmitForm = (data: CreateTaskFormData) => {
+    onSubmit(data);
+    reset();
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmitForm)}>
       <InputField control={control} name="title" label="Название" />
       <InputField
         control={control}

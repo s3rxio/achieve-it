@@ -25,7 +25,7 @@ interface EditTaskModalState extends State {
 }
 
 interface EditTaskModalActions extends Actions {
-  setTask: (task: Task) => void;
+  setTask: (task: Task | null) => void;
   openModal: (task: Task) => void;
 }
 

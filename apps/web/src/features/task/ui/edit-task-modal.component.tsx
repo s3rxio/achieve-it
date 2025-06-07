@@ -19,6 +19,7 @@ export const EditTaskModal: React.FC = () => {
       {
         onSuccess: () => {
           modalStore.setIsOpen(false);
+          modalStore.setTask(null);
         }
       }
     );
@@ -26,6 +27,7 @@ export const EditTaskModal: React.FC = () => {
 
   const handleCancel = () => {
     modalStore.setIsOpen(false);
+    modalStore.setTask(null);
   };
 
   return (

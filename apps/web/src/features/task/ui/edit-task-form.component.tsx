@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import dayjs from "dayjs";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { TaskStatus } from "../../../entitites/task";
 import { useAppForm } from "../../../shared/libs/zod";
 import { DatePickerField, InputField, SelectField } from "../../../shared/ui";
@@ -17,7 +17,7 @@ export const EditTaskForm: FC<EditTaskFormProps> = ({
   isLoading,
   task
 }) => {
-  const { control, handleSubmit } = useAppForm(editTaskSchema, {
+  const { control, handleSubmit, reset } = useAppForm(editTaskSchema, {
     mode: "onChange",
     defaultValues: {
       title: task.title,
@@ -27,8 +27,22 @@ export const EditTaskForm: FC<EditTaskFormProps> = ({
     }
   });
 
+  const onSubmitForm = (data: EditTaskFormData) => {
+    onSubmit(data);
+    reset();
+  };
+
+  useEffect(() => {
+    reset({
+      title: task.title,
+      description: task.description,
+      dueDate: task.dueDate,
+      status: task.status
+    });
+  }, [task, reset]);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmitForm)}>
       <InputField control={control} name="title" label="Название" />
       <InputField
         control={control}
