@@ -21,11 +21,6 @@ export const Header: FC<HeaderProps> = props => {
 
   const userMenuItems: MenuProps["items"] = [
     {
-      key: "profile",
-      label: <Link to="/profile">Профиль</Link>,
-      icon: <UserOutlined />
-    },
-    {
       key: "logout",
       label: "Выйти",
       icon: <LogoutOutlined />,
