@@ -1,25 +1,28 @@
 import { Layout, Menu, MenuProps, SiderProps } from "antd";
 import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuthStore } from "../../features/auth";
 
 type MenuItem = Required<MenuProps>["items"][number];
-
-const navbarItem: MenuItem[] = [
-  {
-    key: "tasks",
-    label: <Link to="/tasks">Задания</Link>
-  },
-  {
-    key: "profile",
-    label: <Link to="/profile">Профиль</Link>
-  }
-];
 
 type NavbarProps = SiderProps;
 
 export const Navbar: FC<NavbarProps> = props => {
   // route
   const { pathname } = useLocation();
+  const user = useAuthStore(state => state.user);
+
+  const navbarItem: MenuItem[] = [
+    {
+      key: "tasks",
+      label: <Link to="/tasks">Задания</Link>
+    },
+    {
+      key: "users",
+      label: <Link to="/users">Пользователи</Link>,
+      disabled: !user?.isAdmin
+    }
+  ];
 
   return (
     <Layout.Sider theme="light" {...props}>

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Controller,
   Delete,
   Get,
@@ -44,7 +45,11 @@ export class UserController {
 
   @Delete(":id")
   @UseGuards(new IsAdminGuard())
-  remove(@Param("id", ParseIntPipe) id: number) {
+  remove(@Param("id", ParseIntPipe) id: number, @UserMe("id") userId: number) {
+    if (id === userId) {
+      throw new BadRequestException("Cannot delete yourself");
+    }
+
     return this.userService.remove(id);
   }
 

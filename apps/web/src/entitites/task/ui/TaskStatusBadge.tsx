@@ -2,7 +2,7 @@ import { Badge } from "antd";
 import { FC } from "react";
 import styled from "styled-components";
 import { taskStatusColors } from "../task.const";
-import { TaskStatus } from "../task.types";
+import { TaskStatus } from "../task.model";
 
 interface TaskStatusBadgeProps {
   status: TaskStatus;

@@ -4,9 +4,14 @@ import { useAuthStore } from "../model/auth.store";
 
 interface PrivateRouteProps {
   children: React.ReactNode;
+  forAdmin?: boolean;
 }
 
-export const PrivateRoute: FC<PrivateRouteProps> = ({ children }) => {
-  const accessToken = useAuthStore(state => state.accessToken);
+export const PrivateRoute: FC<PrivateRouteProps> = ({ children, forAdmin }) => {
+  const { accessToken, user } = useAuthStore();
+
+  if (forAdmin && !user?.isAdmin) {
+    return <Navigate to={"/"} />;
+  }
   return accessToken ? children : <Navigate to="/login" />;
 };

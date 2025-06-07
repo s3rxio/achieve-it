@@ -2,6 +2,50 @@
 
 name: achieve-it
 services:
+  web:
+    build: 
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+      args:
+        - VITE_API_URL=/api
+    ports:
+      - "4200:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.entrypoints=web"
+      - "traefik.http.routers.web.rule=PathPrefix(`/web`)"
+      - "traefik.http.routers.web.priority=2"
+
+  api:
+    build: 
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+      args:
+        - VITE_API_URL=/api
+    command: "--experimental-global-webcrypto"
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.entrypoints=web"
+      - "traefik.http.routers.api.rule=PathPrefix(`/api`)"
+      - "traefik.http.routers.api.priority=1"
+
+  traefik: 
+    image: traefik:v2.10
+    ports:
+      - "80:80"
+      - "5050:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"    
+
   postgres:
     image: postgres
     ports:

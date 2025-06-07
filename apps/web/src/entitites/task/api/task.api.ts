@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { apiInstance } from "../../../shared/api";
 import { mapTask } from "../lib";
-import { Task, TaskFormData } from "../task.types";
+import { Task, TaskFormData } from "../task.model";
 
 export const taskApi = {
   fetchTasks: (date: string = dayjs().format("YYYY-MM")) =>

@@ -7,6 +7,7 @@ import { MainLayout } from "./ui/layout.component";
 const NotFoundPage = lazy(() => import("../pages/not-found"));
 const LoginPage = lazy(() => import("../pages/login"));
 const RegisterPage = lazy(() => import("../pages/register"));
+const UsersPage = lazy(() => import("../pages/users"));
 
 export const Router: FC = () => {
   const meQuery = useFetchMe(false);
@@ -66,10 +67,10 @@ export const Router: FC = () => {
             }
           />
           <Route
-            path="profile"
+            path="users"
             element={
               <PrivateRoute>
-                <NotFoundPage />
+                <UsersPage />
               </PrivateRoute>
             }
           />

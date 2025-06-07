@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotImplementedException
-} from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import * as bcrypt from "bcryptjs";
 import { FindOptionsRelations, FindOptionsWhere, Repository } from "typeorm";
@@ -80,7 +76,9 @@ export class UserService {
   }
 
   remove(id: number) {
-    throw new NotImplementedException();
+    const user = this.findOne({ id });
+
+    return this.repo.delete(id);
   }
 
   /* TODO: Shouldn't be in UserService */

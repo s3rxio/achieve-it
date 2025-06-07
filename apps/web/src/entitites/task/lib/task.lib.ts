@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { Task } from "../task.types";
+import { Task } from "../task.model";
 
 /* Mappers */
 export const mapTask = (task: Task) => ({

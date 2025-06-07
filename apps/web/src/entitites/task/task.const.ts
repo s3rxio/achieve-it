@@ -1,4 +1,4 @@
-import { TaskStatus } from "./task.types";
+import { TaskStatus } from "./task.model";
 
 export const taskStatusColors: Record<TaskStatus, string> = {
   [TaskStatus.Created]: "blue",
