@@ -1,23 +1,33 @@
-import { Controller, Get } from "@nestjs/common";
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  UseGuards
+} from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { UserEntity } from "./entities/user.entity";
+import { IsAdminGuard } from "./is-admin.guard";
 import { UserMe } from "./user-me.decorator";
+import { UserService } from "./user.service";
 
 @ApiTags("users")
 @ApiBearerAuth()
 @Controller("users")
 export class UserController {
-  // constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   // @Post()
   // create(@Body() createUserDto: CreateUserDto) {
   //   return this.userService.create(createUserDto);
   // }
 
-  // @Get()
-  // findAll() {
-  //   return this.userService.findAll();
-  // }
+  @Get()
+  @UseGuards(new IsAdminGuard())
+  findAll() {
+    return this.userService.findAll();
+  }
 
   // @Get(":id")
   // findOne(@Param("id", ParseIntPipe) id: number) {
@@ -32,10 +42,11 @@ export class UserController {
   //   return this.userService.update(id, updateUserDto);
   // }
 
-  // @Delete(":id")
-  // remove(@Param("id", ParseIntPipe) id: number) {
-  //   return this.userService.remove(id);
-  // }
+  @Delete(":id")
+  @UseGuards(new IsAdminGuard())
+  remove(@Param("id", ParseIntPipe) id: number) {
+    return this.userService.remove(id);
+  }
 
   @Get("me")
   me(@UserMe() user: UserEntity) {
